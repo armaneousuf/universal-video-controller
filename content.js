@@ -1,10 +1,10 @@
 // ==========================================
 // 0. IFRAME GUARD — only run in top-level document
 // ==========================================
-if (window.self !== window.top) {
-  // We're inside an iframe (Instagram embeds, ads, comment boxes, etc.)
-  // Do not mount the widget here — bail out entirely.
-  throw new Error("UVC: skipping iframe context");
+(function () {
+  if (window.self !== window.top) {
+  // We're inside an iframe — quietly exit without throwing a console error
+  return;
 }
 
 // ==========================================
@@ -1068,7 +1068,7 @@ setInterval(() => {
   }
 
   // 3. THE SKIP ACTION
-  if (isAdVisible) {
+  if (isAdVisible && uvcSettings.adSkipperEnabled) { 
     console.log("Universal Video Controller: Ad detected! Skipping...");
 
     // METHOD A: TikTok / YT Shorts Next buttons
@@ -1105,3 +1105,5 @@ setInterval(() => {
     });
   }
 }, 500);
+
+})();
