@@ -108,25 +108,26 @@ style.textContent = `
   }
 
   /* ==========================================
-     ADVANCED SETTINGS PANEL UI (MINT THEME)
+     REDESIGNED MINIMALIST SETTINGS PANEL UI
      ========================================== */
   .uvc-settings-panel {
     display: none;
     flex-direction: column;
     position: fixed;
-    width: 280px;
-    background-color: rgba(14, 14, 14, 0.9);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 12px;
-    padding: 12px 14px;
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+    width: 290px;
+    background-color: rgba(20, 20, 20, 0.85);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
     z-index: 2147483647;
-    max-height: 380px;
+    max-height: 400px;
     overflow-y: auto;
-    gap: 12px;
+    gap: 14px;
     font-weight: normal;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
   
   .uvc-settings-panel.show {
@@ -138,19 +139,17 @@ style.textContent = `
     width: 4px;
   }
   .uvc-settings-panel::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 4px;
   }
 
   .uvc-section-title {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: rgba(52, 211, 153, 0.9); /* Mint Green Accent */
+    font-size: 11px;
+    letter-spacing: 1.2px;
+    color: #34d399; /* Mint Green Accent */
     margin-bottom: 2px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    padding-bottom: 3px;
-    font-weight: 700;
+    font-weight: 600;
+    opacity: 0.9;
   }
 
   .uvc-control-row {
@@ -158,7 +157,7 @@ style.textContent = `
     justify-content: space-between;
     align-items: center;
     gap: 8px;
-    font-size: 11px;
+    font-size: 12px;
     color: rgba(255, 255, 255, 0.85);
   }
 
@@ -170,49 +169,51 @@ style.textContent = `
   .uvc-control-group {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
   }
   .uvc-control-label {
-    font-size: 10px;
-    color: rgba(255, 255, 255, 0.6);
-    font-weight: 600;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 500;
   }
   .uvc-segment-container {
     display: flex;
-    gap: 3px;
+    gap: 4px;
     width: 100%;
-    margin-top: 2px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 3px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
   }
   .uvc-segment-btn {
     flex: 1;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: transparent;
+    border: none;
     border-radius: 6px;
-    color: rgba(255, 255, 255, 0.85);
-    padding: 5px 1px;
-    font-size: 9px;
+    color: rgba(255, 255, 255, 0.6);
+    padding: 6px 2px;
+    font-size: 10px;
     font-weight: 600;
     text-align: center;
     cursor: pointer;
-    transition: background 0.15s, border-color 0.15s, color 0.15s;
+    transition: all 0.15s ease;
   }
   .uvc-segment-btn:hover {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 255, 255, 0.2);
     color: #ffffff;
+    background: rgba(255, 255, 255, 0.05);
   }
   .uvc-segment-btn.active {
-    background: rgba(52, 211, 153, 0.18);
-    border-color: #34d399;
+    background: rgba(52, 211, 153, 0.15);
     color: #34d399;
+    font-weight: 700;
   }
 
-  /* Compact Switch Toggle */
+  /* Modern Pill Toggle Switch */
   .uvc-switch {
     position: relative;
     display: inline-block;
-    width: 28px;
-    height: 16px;
+    width: 34px;
+    height: 18px;
   }
   .uvc-switch input {
     opacity: 0;
@@ -223,77 +224,78 @@ style.textContent = `
     position: absolute;
     cursor: pointer;
     top: 0; left: 0; right: 0; bottom: 0;
-    background-color: rgba(255, 255, 255, 0.15);
-    transition: .2s;
-    border-radius: 16px;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: .2s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 20px;
   }
   .uvc-slider-switch:before {
     position: absolute;
     content: "";
     height: 12px;
     width: 12px;
-    left: 2px;
-    bottom: 2px;
-    background-color: white;
-    transition: .2s;
+    left: 3px;
+    bottom: 3px;
+    background-color: rgba(255, 255, 255, 0.9);
+    transition: .2s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 50%;
   }
   input:checked + .uvc-slider-switch {
-    background-color: #34d399; /* Mint */
+    background-color: #34d399; 
   }
   input:checked + .uvc-slider-switch:before {
-    transform: translateX(12px);
+    transform: translateX(16px);
+    background-color: #ffffff;
   }
 
-  /* PiP Button Layout */
+  /* Minimalist Action Buttons */
   .uvc-btn-pip {
-    background: rgba(52, 211, 153, 0.15);
-    color: #34d399 !important;
-    border: 1px solid rgba(52, 211, 153, 0.3);
-    border-radius: 4px;
-    padding: 4px 8px;
-    font-size: 10px;
-    font-weight: 700;
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.8) !important;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: 600;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    transition: background 0.2s, border-color 0.2s, transform 0.1s;
+    gap: 6px;
+    transition: all 0.2s ease;
   }
   .uvc-btn-pip:hover {
-    background: rgba(52, 211, 153, 0.3);
-    border-color: rgba(52, 211, 153, 0.5);
-    transform: scale(1.02);
+    background: rgba(52, 211, 153, 0.12);
+    border-color: rgba(52, 211, 153, 0.2);
+    color: #34d399 !important;
   }
   .uvc-btn-pip:active {
-    transform: scale(0.98);
+    transform: scale(0.97);
   }
   .uvc-warning-text {
-    font-size: 8.5px;
-    color: rgba(255, 255, 255, 0.4);
-    line-height: 1.2;
-    margin-top: 1px;
+    font-size: 9px;
+    color: rgba(255, 255, 255, 0.35);
+    line-height: 1.3;
+    margin-top: 2px;
   }
 
   /* Reset Defaults Button */
   .uvc-btn-reset {
-    background: rgba(255, 255, 255, 0.08);
-    color: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 6px;
-    padding: 6px 12px;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    padding: 8px 12px;
     font-size: 11px;
     font-weight: 600;
     cursor: pointer;
     width: 100%;
     text-align: center;
-    transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.1s;
-    margin-top: 4px;
+    transition: all 0.2s ease;
+    margin-top: 6px;
   }
   .uvc-btn-reset:hover {
-    background: rgba(239, 68, 68, 0.2); /* Soft Red Alert Hover */
-    border-color: rgba(239, 68, 68, 0.4);
-    color: #ffffff;
+    background: rgba(239, 68, 68, 0.08); 
+    border-color: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
   }
   .uvc-btn-reset:active {
     transform: scale(0.98);
@@ -378,7 +380,7 @@ const settingsPanel = document.createElement("div");
 settingsPanel.className = "uvc-settings-panel";
 settingsPanel.innerHTML = `
   <!-- SECTION: CONTROL FLOW -->
-  <div class="uvc-section-title">Playback & Controls</div>
+  <div class="uvc-section-title">playback & controls</div>
   
   <div class="uvc-control-group">
     <div class="uvc-control-label">Playback Speed</div>
@@ -414,13 +416,13 @@ settingsPanel.innerHTML = `
   <div class="uvc-control-row">
     <span>Screencast Window</span>
     <button class="uvc-btn-pip" id="uvc-btn-pip-trigger">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><rect x="13" y="13" width="7" height="7"></rect></svg>
-      Picture-in-Picture
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><path d="M13 13h7v7h-7z"></path></svg>
+      Pip View
     </button>
   </div>
 
   <!-- SECTION: AUTOMATION ENGINE -->
-  <div class="uvc-section-title">Automation & Scrolling</div>
+  <div class="uvc-section-title">automation & scrolling</div>
   
   <div class="uvc-control-row">
     <label for="uvc-toggle-adskip">Auto-Skip Ads</label>
@@ -431,7 +433,7 @@ settingsPanel.innerHTML = `
   </div>
 
   <div class="uvc-control-row">
-    <label for="uvc-toggle-autoscroll">Auto-Scroll Video Feeds (Play Next)</label>
+    <label for="uvc-toggle-autoscroll">Auto-Scroll Video Feeds</label>
     <label class="uvc-switch">
       <input type="checkbox" id="uvc-toggle-autoscroll">
       <span class="uvc-slider-switch"></span>
@@ -439,7 +441,7 @@ settingsPanel.innerHTML = `
   </div>
 
   <!-- SECTION: AUDIO / VIDEO MIXERS -->
-  <div class="uvc-section-title">Audio & Video FX</div>
+  <div class="uvc-section-title">audio & video fx</div>
 
   <div class="uvc-control-group">
     <div class="uvc-control-label">Audio Booster</div>
@@ -491,7 +493,7 @@ settingsPanel.innerHTML = `
     </label>
   </div>
 
-  <div class="uvc-control-row" style="margin-top: 6px;">
+  <div class="uvc-control-row">
     <label for="uvc-toggle-visible">Always Show Controller</label>
     <label class="uvc-switch">
       <input type="checkbox" id="uvc-toggle-visible">
@@ -650,10 +652,6 @@ function triggerFeedScroll() {
   }
 
   // ── Strategy 2: Instagram Reels — find the Reels scroll container ──
-  // Instagram renders Reels in a vertically-snapping scroll container.
-  // It does NOT respond to window.scrollBy or keyboard events reliably.
-  // We identify it by querying for the element that actually contains
-  // the active video and has scroll snap behavior.
   const isInstagram = location.hostname.includes("instagram.com");
   if (isInstagram) {
     const vid = getActiveVideo();
@@ -835,7 +833,7 @@ settingsBtn.addEventListener("click", () => {
       // Open upward
       settingsPanel.style.top = `${barRect.top - panelHeight - 8}px`;
     }
-    settingsPanel.style.left = `${Math.min(barRect.left, window.innerWidth - 288)}px`;
+    settingsPanel.style.left = `${Math.min(barRect.left, window.innerWidth - 298)}px`;
   } else {
     timeBox.classList.remove("settings-active");
   }
