@@ -3,8 +3,13 @@
 // ==========================================
 (function () {
   if (window.self !== window.top) {
-  // We're inside an iframe — quietly exit without throwing a console error
-  return;
+  // If it's an iframe, check if it's actually the YouTube embedded player
+  const isYouTubeEmbed = window.location.hostname.includes("youtube.com") && window.location.pathname.includes("/embed/");
+  
+  if (!isYouTubeEmbed) {
+    // If it's a random ad or Instagram embed iframe, bail out quietly
+    return;
+  }
 }
 
 // ==========================================
@@ -345,7 +350,7 @@ backBtn.innerHTML = `
 // Text Span (Timer)
 const timeText = document.createElement("span");
 timeText.className = "uvc-text";
-timeText.innerText = "0:00 / 0:00";
+timeText.innerText = "0:00 - 0:00";
 
 // "Forward" Button
 const forwardBtn = document.createElement("button");
