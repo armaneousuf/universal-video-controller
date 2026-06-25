@@ -4,6 +4,11 @@
   "version": "2.5",
   "description": "Draggable video controller with an advanced settings panel, audio/video adjustments, and ad features.",
   "permissions": ["storage"],
+  "icons": {
+    "16": "icons/image.png", 
+    "48": "icons/image.png",
+    "128": "icons/image.png"
+  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
