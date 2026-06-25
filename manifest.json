@@ -5,9 +5,9 @@
   "description": "Draggable video controller with an advanced settings panel, audio/video adjustments, and ad features.",
   "permissions": ["storage"],
   "icons": {
-    "16": "icons/image.png", 
-    "48": "icons/image.png",
-    "128": "icons/image.png"
+    "16": "icons/icon16.png", 
+    "48": "icons/icon28.png",
+    "128": "icons/icon128.png"
   },
   "content_scripts": [
     {
