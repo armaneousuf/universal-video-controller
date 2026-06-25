@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Universal Video Controller",
+  "version": "2.5",
+  "description": "Draggable video controller with an advanced settings panel, audio/video adjustments, and ad features.",
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "all_frames": true
+    }
+  ]
+}
