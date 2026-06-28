@@ -80,6 +80,8 @@
     border-radius: 50%;
     justify-content: center;
     gap: 0;
+    background-color: #324f454a;
+    border: 2px solid #21782d8a;
   }
   .uvc-container.collapsed .uvc-btn:not(.uvc-collapse-btn),
   .uvc-container.collapsed .uvc-text {
