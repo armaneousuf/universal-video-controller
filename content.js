@@ -15,33 +15,35 @@
   }
 
   // ==========================================
-  // 1. INJECT GLASSMORPHIC MINT CSS
+  // 1. INJECT GLASSMORPHIC MINT CSS (PIXEL PERFECT & TIGHT)
   // ==========================================
   const style = document.createElement("style");
   style.textContent = `
   /* Main Container - Glassmorphic Aesthetic */
   .uvc-container {
     position: fixed;
-    top: 20px;
-    left: 20px;
-    background-color: rgba(18, 18, 18, 0.75);
+    top: 12px;
+    left: 12px;
+    background-color: rgba(18, 18, 18, 0.85);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     color: #ffffff;
-    padding: 2px 6px;
-    border-radius: 20px;
+    padding: 2px 4px;
+    border-radius: 12px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
     z-index: 2147483647;
     cursor: grab;
     display: none;
     align-items: center;
-    gap: 4px;
-    border: 1px solid rgba(9, 243, 107, 0.24);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-    transition: border-color 0.2s, box-shadow 0.2s, border-radius 0.2s, padding 0.2s;
+    gap: 3px;
+    border: 1px solid rgba(9, 243, 107, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    transition: border-color 0.2s, box-shadow 0.2s, border-radius 0.2s;
     transform-origin: top left;
+    height: 24px;
+    box-sizing: border-box;
 
     /* Stop text selection inside container */
     user-select: none !important;
@@ -59,8 +61,8 @@
   }
 
   .uvc-container:hover {
-    border-color: rgba(255, 255, 255, 0.25);
-    box-shadow: 0 8px 36px rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
   }
 
   .uvc-container:active {
@@ -74,264 +76,288 @@
 
   /* Collapsed Circular State */
   .uvc-container.collapsed {
-    width: 40px;
-    height: 40px;
+    width: 24px;
+    height: 24px;
     padding: 0;
     border-radius: 50%;
     justify-content: center;
     gap: 0;
     background-color: #324f454a;
-    border: 2px solid #21782d8a;
+    border: 1.5px solid #21782d8a;
   }
   .uvc-container.collapsed .uvc-btn:not(.uvc-collapse-btn),
- .uvc-container.collapsed .uvc-text {
-   display: none !important;
- }
- .uvc-collapse-btn {
-   width: 30px;
-   height: 30px;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   margin: 0;
- }
+  .uvc-container.collapsed .uvc-text {
+    display: none !important;
+  }
+  .uvc-collapse-btn {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+  }
 
- /* Interactive Buttons */
- .uvc-btn {
-   background: transparent;
-   border: none;
-   cursor: pointer;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   padding: 5px;
-   border-radius: 50%;
-   transition: opacity 0.2s, transform 0.1s, background-color 0.2s, color 0.2s;
-   color: rgba(255, 255, 255, 0.75);
- }
- .uvc-btn svg {
-   stroke: currentColor;
- }
- .uvc-btn:hover {
-   color: #ffffff;
-   background-color: rgba(255, 255, 255, 0.1);
-   transform: scale(1.08);
- }
- .uvc-btn:active {
-   transform: scale(0.92);
- }
+  /* Interactive Buttons */
+  .uvc-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border-radius: 50%;
+    transition: background-color 0.15s, color 0.15s, transform 0.1s;
+    color: rgba(255, 255, 255, 0.75);
+    box-sizing: border-box;
+  }
+  .uvc-btn svg {
+    stroke: currentColor;
+    display: block;
+  }
+  .uvc-btn:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: scale(1.05);
+  }
+  .uvc-btn:active {
+    transform: scale(0.95);
+  }
 
- /* Speed Selector Button */
- .uvc-speed-btn {
-   font-size: 11px;
-   font-weight: 700;
-   min-width: 32px;
-   letter-spacing: 0.3px;
- }
+  /* Speed Selector Button */
+  .uvc-speed-btn {
+    font-size: 10px;
+    font-weight: 700;
+    width: auto;
+    min-width: 26px;
+    padding: 0 2px;
+    border-radius: 4px;
+    letter-spacing: -0.1px;
+  }
 
- /* Time Display */
- .uvc-text {
-   min-width: 68px;
-   text-align: center;
-   font-variant-numeric: tabular-nums;
-   letter-spacing: 0.3px;
-   color: rgba(255, 255, 255, 0.9);
- }
+  /* Time Display */
+  .uvc-text {
+    min-width: 66px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.1px;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 20px;
+    display: inline-block;
+  }
 
- /* ==========================================
-  * REDESIGNED MINIMALIST SETTINGS PANEL UI
-  * ========================================== */
- .uvc-settings-panel {
-   display: none;
-   flex-direction: column;
-   position: fixed;
-   width: 290px;
-   background-color: rgba(20, 20, 20, 0.85);
-   backdrop-filter: blur(25px);
-   -webkit-backdrop-filter: blur(25px);
-   border: 1px solid rgba(255, 255, 255, 0.08);
-   border-radius: 16px;
-   padding: 16px;
-   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-   z-index: 2147483647;
-   max-height: 400px;
-   overflow-y: auto;
-   gap: 14px;
-   font-weight: normal;
-   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
- }
+  /* ==========================================
+   * REDESIGNED PERFECTLY ALIGNED SETTINGS PANEL
+   * ========================================== */
+  .uvc-settings-panel {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    width: 240px;
+    background-color: rgba(18, 18, 18, 0.94);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+    z-index: 2147483647;
+    max-height: 360px;
+    overflow-y: auto;
+    gap: 7px;
+    font-weight: normal;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    box-sizing: border-box;
+  }
 
- .uvc-settings-panel.show {
-   display: flex;
- }
+  .uvc-settings-panel.show {
+    display: flex;
+  }
 
- /* Custom Panel Scrollbar */
- .uvc-settings-panel::-webkit-scrollbar {
-   width: 4px;
- }
- .uvc-settings-panel::-webkit-scrollbar-thumb {
-   background: rgba(255, 255, 255, 0.1);
-   border-radius: 4px;
- }
+  /* Custom Panel Scrollbar */
+  .uvc-settings-panel::-webkit-scrollbar {
+    width: 3px;
+  }
+  .uvc-settings-panel::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 3px;
+  }
 
- .uvc-section-title {
-   font-size: 11px;
-   letter-spacing: 1.2px;
-   color: #34d399; /* Mint Green Accent */
-   margin-bottom: 2px;
-   font-weight: 600;
-   opacity: 0.9;
- }
+  .uvc-section-title {
+    font-size: 9px;
+    letter-spacing: 0.8px;
+    color: #34d399; /* Mint Green Accent */
+    margin: 4px 0 2px 0;
+    font-weight: 700;
+    opacity: 0.85;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(52, 211, 153, 0.15);
+    padding-bottom: 2px;
+  }
 
- .uvc-control-row {
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   gap: 8px;
-   font-size: 12px;
-   color: rgba(255, 255, 255, 0.85);
- }
+  .uvc-control-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.85);
+    padding: 1px 0;
+    min-height: 20px;
+  }
 
- .uvc-control-row label {
-   cursor: pointer;
- }
+  .uvc-control-row label {
+    cursor: pointer;
+    line-height: 1.2;
+  }
 
- /* Multi-Choice Clickable Segment Selectors */
- .uvc-control-group {
-   display: flex;
-   flex-direction: column;
-   gap: 6px;
- }
- .uvc-control-label {
-   font-size: 11px;
-   color: rgba(255, 255, 255, 0.5);
-   font-weight: 500;
- }
- .uvc-segment-container {
-   display: flex;
-   gap: 4px;
-   width: 100%;
-   background: rgba(255, 255, 255, 0.03);
-   padding: 3px;
-   border-radius: 8px;
-   border: 1px solid rgba(255, 255, 255, 0.04);
- }
- .uvc-segment-btn {
-   flex: 1;
-   background: transparent;
-   border: none;
-   border-radius: 6px;
-   color: rgba(255, 255, 255, 0.6);
-   padding: 6px 2px;
-   font-size: 10px;
-   font-weight: 600;
-   text-align: center;
-   cursor: pointer;
-   transition: all 0.15s ease;
- }
- .uvc-segment-btn:hover {
-   color: #ffffff;
-   background: rgba(255, 255, 255, 0.05);
- }
- .uvc-segment-btn.active {
-   background: rgba(52, 211, 153, 0.15);
-   color: #34d399;
-   font-weight: 700;
- }
+  /* Multi-Choice Clickable Segment Selectors */
+  .uvc-control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 1px 0;
+  }
+  .uvc-control-label {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.45);
+    font-weight: 500;
+  }
+  .uvc-segment-container {
+    display: flex;
+    gap: 2px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 2px;
+    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    box-sizing: border-box;
+  }
+  .uvc-segment-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    border-radius: 3px;
+    color: rgba(255, 255, 255, 0.55);
+    padding: 3px 0;
+    font-size: 9px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.12s ease;
+  }
+  .uvc-segment-btn:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.04);
+  }
+  .uvc-segment-btn.active {
+    background: rgba(52, 211, 153, 0.14);
+    color: #34d399;
+    font-weight: 700;
+  }
 
- /* Modern Pill Toggle Switch */
- .uvc-switch {
-   position: relative;
-   display: inline-block;
-   width: 34px;
-   height: 18px;
- }
- .uvc-switch input {
-   opacity: 0;
-   width: 0;
-   height: 0;
- }
- .uvc-slider-switch {
-   position: absolute;
-   cursor: pointer;
-   top: 0; left: 0; right: 0; bottom: 0;
-   background-color: rgba(255, 255, 255, 0.1);
-   transition: .2s cubic-bezier(0.4, 0, 0.2, 1);
-   border-radius: 20px;
- }
- .uvc-slider-switch:before {
-   position: absolute;
-   content: "";
-   height: 12px;
-   width: 12px;
-   left: 3px;
-   bottom: 3px;
-   background-color: rgba(255, 255, 255, 0.9);
-   transition: .2s cubic-bezier(0.4, 0, 0.2, 1);
-   border-radius: 50%;
- }
- input:checked + .uvc-slider-switch {
-   background-color: #34d399;
- }
- input:checked + .uvc-slider-switch:before {
-   transform: translateX(16px);
-   background-color: #ffffff;
- }
+  /* Modern Pill Toggle Switch */
+  .uvc-switch {
+    position: relative;
+    display: inline-block;
+    width: 28px;
+    height: 15px;
+    flex-shrink: 0;
+  }
+  .uvc-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .uvc-slider-switch {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(255, 255, 255, 0.08);
+    transition: .15s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 10px;
+  }
+  .uvc-slider-switch:before {
+    position: absolute;
+    content: "";
+    height: 9px;
+    width: 9px;
+    left: 3px;
+    bottom: 3px;
+    background-color: rgba(255, 255, 255, 0.85);
+    transition: .15s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 50%;
+  }
+  input:checked + .uvc-slider-switch {
+    background-color: #34d399;
+  }
+  input:checked + .uvc-slider-switch:before {
+    transform: translateX(13px);
+    background-color: #ffffff;
+  }
 
- /* Minimalist Action Buttons */
- .uvc-btn-pip {
-   background: rgba(255, 255, 255, 0.05);
-   color: rgba(255, 255, 255, 0.8) !important;
-   border: 1px solid rgba(255, 255, 255, 0.06);
-   border-radius: 8px;
-   padding: 6px 12px;
-   font-size: 11px;
-   font-weight: 600;
-   cursor: pointer;
-   display: inline-flex;
-   align-items: center;
-   gap: 6px;
-   transition: all 0.2s ease;
- }
- .uvc-btn-pip:hover {
-   background: rgba(52, 211, 153, 0.12);
-   border-color: rgba(52, 211, 153, 0.2);
-   color: #34d399 !important;
- }
- .uvc-btn-pip:active {
-   transform: scale(0.97);
- }
- .uvc-warning-text {
-   font-size: 9px;
-   color: rgba(255, 255, 255, 0.35);
-   line-height: 1.3;
-   margin-top: 2px;
- }
+  /* Minimalist Action Buttons */
+  .uvc-btn-pip {
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.8) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
+    padding: 3px 6px;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.15s ease;
+    height: 18px;
+    box-sizing: border-box;
+  }
+  .uvc-btn-pip:hover {
+    background: rgba(52, 211, 153, 0.12);
+    border-color: rgba(52, 211, 153, 0.2);
+    color: #34d399 !important;
+  }
+  .uvc-btn-pip:active {
+    transform: scale(0.97);
+  }
+  .uvc-warning-text {
+    font-size: 8px;
+    color: rgba(255, 255, 255, 0.3);
+    line-height: 1.2;
+    margin-top: 1px;
+    padding: 0 1px;
+  }
 
- /* Reset Defaults Button */
- .uvc-btn-reset {
-   background: transparent;
-   color: rgba(255, 255, 255, 0.4);
-   border: 1px solid rgba(255, 255, 255, 0.06);
-   border-radius: 8px;
-   padding: 8px 12px;
-   font-size: 11px;
-   font-weight: 600;
-   cursor: pointer;
-   width: 100%;
-   text-align: center;
-   transition: all 0.2s ease;
-   margin-top: 6px;
- }
- .uvc-btn-reset:hover {
-   background: rgba(239, 68, 68, 0.08);
-   border-color: rgba(239, 68, 68, 0.2);
-   color: #ef4444;
- }
- .uvc-btn-reset:active {
-   transform: scale(0.98);
- }
- `;
+  /* Reset Defaults Button */
+  .uvc-btn-reset {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    transition: all 0.15s ease;
+    margin-top: 3px;
+    box-sizing: border-box;
+  }
+  .uvc-btn-reset:hover {
+    background: rgba(239, 68, 68, 0.08);
+    border-color: rgba(239, 68, 68, 0.18);
+    color: #ef4444;
+  }
+  .uvc-btn-reset:active {
+    transform: scale(0.98);
+  }
+  `;
   document.head.appendChild(style);
 
   // ==========================================
@@ -349,12 +375,10 @@
     adSkipperEnabled: true,
     autoScrollEnabled: false,
     stayVisible: false,
-    isCollapsed: false, // <--- Track collapsed state natively
+    isCollapsed: false,
   };
 
   let uvcSettings = { ...defaultSettings };
-
-  // WeakMap tracking loaded video audio nodes
   const audioCtxs = new WeakMap();
 
   // ==========================================
@@ -363,67 +387,59 @@
   const timeBox = document.createElement("div");
   timeBox.className = "uvc-container";
 
-  // "Back" Button
   const backBtn = document.createElement("button");
   backBtn.className = "uvc-btn";
   backBtn.title = "Jump Backwards";
   backBtn.innerHTML = `
- <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+ <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
  <polygon points="11 19 2 12 11 5 11 19"></polygon>
  <polygon points="22 19 13 12 22 5 22 19"></polygon>
  </svg>
  `;
 
-  // Text Span (Timer)
   const timeText = document.createElement("span");
   timeText.className = "uvc-text";
   timeText.innerText = "0:00 - 0:00";
 
-  // "Forward" Button
   const forwardBtn = document.createElement("button");
   forwardBtn.className = "uvc-btn";
   forwardBtn.title = "Jump Forwards";
   forwardBtn.innerHTML = `
-   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-   <polygon points="13 19 22 12 13 5 13 19"></polygon>
-   <polygon points="2 19 11 12 2 5 2 19"></polygon>
-   </svg>
-   `;
+ <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+ <polygon points="13 19 22 12 13 5 13 19"></polygon>
+ <polygon points="2 19 11 12 2 5 2 19"></polygon>
+ </svg>
+ `;
 
-  // Playback Speed Toggle Button
   const speedBtn = document.createElement("button");
   speedBtn.className = "uvc-btn uvc-speed-btn";
   speedBtn.title = "Cycle Velocities";
   speedBtn.innerText = "1x";
 
-  // Settings Toggle Button
   const settingsBtn = document.createElement("button");
   settingsBtn.className = "uvc-btn";
   settingsBtn.title = "Controller Preferences";
   settingsBtn.innerHTML = `
- <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+ <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
  <circle cx="12" cy="12" r="3"></circle>
  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
  </svg>
  `;
 
-  // Space Saving Collapse/Expand Button
   const collapseBtn = document.createElement("button");
   collapseBtn.className = "uvc-btn uvc-collapse-btn";
 
   const iconCollapse = `
- <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 32 32"><title xmlns="">collapse</title><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m23 26l-7-7l-7 7M9 6l7 7l7-7"/></svg>
+ <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 32 32"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m23 26l-7-7l-7 7M9 6l7 7l7-7"/></svg>
  `;
 
   const iconExpand = `
- <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><title xmlns="">expand</title><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="16" stroke-width="1.5" d="M19 12V9c0-1.886 0-2.828-.586-3.414S16.886 5 15 5h-3m-7 7v3c0 1.886 0 2.828.586 3.414S7.114 19 9 19h3"/></svg>
+ <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="16" stroke-width="2" d="M19 12V9c0-1.886 0-2.828-.586-3.414S16.886 5 15 5h-3m-7 7v3c0 1.886 0 2.828.586 3.414S7.114 19 9 19h3"/></svg>
  `;
 
-  // Settings Slide Panel Content
   const settingsPanel = document.createElement("div");
   settingsPanel.className = "uvc-settings-panel";
   settingsPanel.innerHTML = `
- <!-- SECTION: CONTROL FLOW -->
  <div class="uvc-section-title">playback & controls</div>
 
  <div class="uvc-control-group">
@@ -458,14 +474,13 @@
  </div>
 
  <div class="uvc-control-row">
- <span>Screencast Window</span>
+ <label>Screencast Window</label>
  <button class="uvc-btn-pip" id="uvc-btn-pip-trigger">
- <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><path d="M13 13h7v7h-7z"></path></svg>
- Pip View
+ <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right:2px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><path d="M13 13h7v7h-7z"></path></svg>
+ PiP
  </button>
  </div>
 
- <!-- SECTION: AUTOMATION ENGINE -->
  <div class="uvc-section-title">automation & scrolling</div>
 
  <div class="uvc-control-row">
@@ -484,7 +499,6 @@
  </label>
  </div>
 
- <!-- SECTION: AUDIO / VIDEO MIXERS -->
  <div class="uvc-section-title">audio & video fx</div>
 
  <div class="uvc-control-group">
@@ -496,7 +510,7 @@
  <button class="uvc-segment-btn" data-val="3">300%</button>
  <button class="uvc-segment-btn" data-val="4">400%</button>
  </div>
- <span class="uvc-warning-text">⚠️ Note: May silence cross-origin tracks on restrictive domains.</span>
+ <span class="uvc-warning-text">⚠️ Restrictive domains may silence cross-origin tracks.</span>
  </div>
 
  <div class="uvc-control-group">
@@ -545,7 +559,6 @@
  </label>
  </div>
 
- <!-- SECTION: RESET COMPONENT -->
  <button class="uvc-btn-reset" id="uvc-btn-reset">Reset to Defaults</button>
  `;
 
@@ -557,7 +570,7 @@
   timeBox.appendChild(settingsBtn);
   timeBox.appendChild(collapseBtn);
   document.body.appendChild(timeBox);
-  document.body.appendChild(settingsPanel); // Fixed-position panel lives on body, not inside timeBox
+  document.body.appendChild(settingsPanel);
 
   // ==========================================
   // 4. PRESERVATION LOGIC (CHROME STORAGE)
@@ -566,7 +579,6 @@
     chrome.storage.local.set({ uvcSettings });
   }
 
-  // Mark target values inside active selection groups
   function selectSegmentActive(containerId, value) {
     const container = document.getElementById(containerId);
     if (!container) return;
@@ -585,7 +597,6 @@
       timeBox.classList.add("collapsed");
       collapseBtn.innerHTML = iconExpand;
       collapseBtn.title = "Expand Controller";
-      // Forcibly close settings panel if collapsed
       if (settingsPanel.classList.contains("show")) {
         settingsPanel.classList.remove("show");
         timeBox.classList.remove("settings-active");
@@ -603,7 +614,6 @@
         uvcSettings = { ...uvcSettings, ...result.uvcSettings };
       }
 
-      // Set multi-choice active highlights
       selectSegmentActive("uvc-seg-speed", uvcSettings.lockedSpeed);
       speedBtn.innerText = `${uvcSettings.lockedSpeed}x`;
 
@@ -613,22 +623,16 @@
       selectSegmentActive("uvc-seg-contrast", uvcSettings.videoContrast);
       selectSegmentActive("uvc-seg-grayscale", uvcSettings.videoGrayscale);
 
-      document.getElementById("uvc-toggle-speedlock").checked =
-        uvcSettings.speedLock;
-      document.getElementById("uvc-toggle-adskip").checked =
-        uvcSettings.adSkipperEnabled;
-      document.getElementById("uvc-toggle-autoscroll").checked =
-        uvcSettings.autoScrollEnabled;
-      document.getElementById("uvc-toggle-invert").checked =
-        uvcSettings.videoInvert;
-      document.getElementById("uvc-toggle-visible").checked =
-        uvcSettings.stayVisible;
+      document.getElementById("uvc-toggle-speedlock").checked = uvcSettings.speedLock;
+      document.getElementById("uvc-toggle-adskip").checked = uvcSettings.adSkipperEnabled;
+      document.getElementById("uvc-toggle-autoscroll").checked = uvcSettings.autoScrollEnabled;
+      document.getElementById("uvc-toggle-invert").checked = uvcSettings.videoInvert;
+      document.getElementById("uvc-toggle-visible").checked = uvcSettings.stayVisible;
 
-      applyCollapseState(); // Check sizing mode
+      applyCollapseState();
     });
   }
 
-  // Initial configuration load
   loadSettings();
 
   // ==========================================
@@ -641,9 +645,6 @@
     );
   }
 
-  // Walk up from an element to find its nearest scrollable ancestor.
-  // Used so auto-scroll only ever moves the ONE feed container the active
-  // video actually lives in, instead of every scrollable div on the page.
   function findScrollableAncestor(el) {
     let node = el.parentElement;
     while (node && node !== document.body) {
@@ -660,7 +661,6 @@
     return null;
   }
 
-  // Apply visual styles to active playback element
   function applyVideoFilters(vid) {
     if (!vid) return;
     vid.style.filter = `
@@ -671,7 +671,6 @@
    `;
   }
 
-  // Audio gain routing processing
   function applyAudioBoost(vid, multiplier) {
     if (multiplier === 1.0 && !audioCtxs.has(vid)) return;
 
@@ -697,16 +696,12 @@
       data.gainNode.gain.value = multiplier;
     } catch (err) {
       if (!vid.__uvc_audio_error) {
-        console.warn(
-          "UVC Audio Booster configuration rejected (likely cross-origin CORS limitations):",
-          err,
-        );
+        console.warn("UVC Audio Booster configuration rejected:", err);
         vid.__uvc_audio_error = true;
       }
     }
   }
 
-  // Picture-In-Picture trigger execution
   function togglePiP() {
     const vid = getActiveVideo();
     if (!vid) return;
@@ -718,22 +713,17 @@
     }
   }
 
-  // Time-update assisted auto scroll execution with cooldown safety
   let scrollCooldown = false;
   function triggerFeedScroll() {
     if (scrollCooldown) return;
     scrollCooldown = true;
 
-    // 3-second cooldown to avoid multi-trigger overlaps during swipe/load frames
     setTimeout(() => {
       scrollCooldown = false;
     }, 3000);
 
-    console.log(
-      "Universal Video Controller: Video ended or looped, auto-advancing...",
-    );
+    console.log("Universal Video Controller: Video ended or looped, auto-advancing...");
 
-    // ── Strategy 1: YouTube Shorts & TikTok — dedicated "Next" buttons ──
     const nextButtons = [
       document.querySelector('[aria-label="Next video"]'),
       document.querySelector('[data-e2e="arrow-right"]'),
@@ -746,11 +736,6 @@
       }
     }
 
-    // ── Strategy 2: nearest scrollable ancestor of the active video ──
-    // Works for Instagram Reels, Facebook Watch/Reels/video feed, and most
-    // other single-column feeds. Scoping the scroll to the video's own
-    // container (instead of the whole page) is what keeps this from
-    // dragging unrelated UI — sidebars, chat, comment boxes — along with it.
     const isInstagram = location.hostname.includes("instagram.com");
     const vid = getActiveVideo();
     if (vid) {
@@ -765,7 +750,6 @@
       }
 
       if (isInstagram) {
-        // Fallback: simulate a touch swipe upward (Instagram's React handlers respond to this)
         const rect = vid.getBoundingClientRect();
         const touchStartY = rect.top + rect.height * 0.7;
         const touchEndY = rect.top + rect.height * 0.1;
@@ -775,28 +759,10 @@
           bubbles: true,
           cancelable: true,
           touches: [
-            new Touch({
-              identifier: Date.now(),
-              target: vid,
-              clientX: touchX,
-              clientY: y,
-              radiusX: 2,
-              radiusY: 2,
-              rotationAngle: 0,
-              force: 1,
-            }),
+            new Touch({ identifier: Date.now(), target: vid, clientX: touchX, clientY: y, radiusX: 2, radiusY: 2, rotationAngle: 0, force: 1 }),
           ],
           changedTouches: [
-            new Touch({
-              identifier: Date.now(),
-              target: vid,
-              clientX: touchX,
-              clientY: y,
-              radiusX: 2,
-              radiusY: 2,
-              rotationAngle: 0,
-              force: 1,
-            }),
+            new Touch({ identifier: Date.now(), target: vid, clientX: touchX, clientY: y, radiusX: 2, radiusY: 2, rotationAngle: 0, force: 1 }),
           ],
         });
 
@@ -811,7 +777,6 @@
       }
     }
 
-    // ── Strategy 3: Generic — keyboard ArrowDown ──
     const arrowEvent = new KeyboardEvent("keydown", {
       key: "ArrowDown",
       code: "ArrowDown",
@@ -821,17 +786,9 @@
       cancelable: true,
     });
     document.dispatchEvent(arrowEvent);
-
-    // ── Strategy 4: window scroll fallback ──
-    // (No more "Strategy 5" that blasted every overflow container on the
-    // page — that was scrolling sidebars, chat, comment boxes, etc. along
-    // with the feed on sites like Facebook. Window scroll is enough of a
-    // last resort; if a specific feed container needed scrolling, Strategy 2
-    // above already caught it.)
     window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
   }
 
-  // Format seconds into digital layout
   function formatTime(seconds) {
     if (isNaN(seconds) || seconds === Infinity) return "0:00";
     const min = Math.floor(seconds / 60);
@@ -844,20 +801,14 @@
   // ==========================================
   backBtn.addEventListener("click", () => {
     const vid = getActiveVideo();
-    if (vid)
-      vid.currentTime = Math.max(0, vid.currentTime - uvcSettings.skipInterval);
+    if (vid) vid.currentTime = Math.max(0, vid.currentTime - uvcSettings.skipInterval);
   });
 
   forwardBtn.addEventListener("click", () => {
     const vid = getActiveVideo();
-    if (vid)
-      vid.currentTime = Math.min(
-        vid.duration,
-        vid.currentTime + uvcSettings.skipInterval,
-      );
+    if (vid) vid.currentTime = Math.min(vid.duration, vid.currentTime + uvcSettings.skipInterval);
   });
 
-  // Manual top-bar speed increments loop
   const speeds = [1, 1.25, 1.5, 2, 0.5];
   let speedIndex = 0;
   speedBtn.addEventListener("click", () => {
@@ -874,9 +825,8 @@
     }
   });
 
-  // Collapse toggler
   collapseBtn.addEventListener("click", (e) => {
-    e.stopPropagation(); // Stop parent click events (if any)
+    e.stopPropagation();
     uvcSettings.isCollapsed = !uvcSettings.isCollapsed;
     applyCollapseState();
     saveSettings();
@@ -889,7 +839,6 @@
   let offsetX = 0;
   let offsetY = 0;
 
-  // Retrieve layout positioning coordinates
   chrome.storage.local.get(["uvc_position"], (result) => {
     if (result.uvc_position) {
       timeBox.style.left = result.uvc_position.left;
@@ -898,9 +847,7 @@
   });
 
   timeBox.addEventListener("mousedown", (e) => {
-    // Disable dragging behaviors completely while configuration dashboard is open
     if (settingsPanel.classList.contains("show")) return;
-
     if (e.target.closest("button")) return;
     if (e.target.closest(".uvc-settings-panel")) return;
 
@@ -914,14 +861,8 @@
   document.addEventListener("mousemove", (e) => {
     if (!isDragging) return;
 
-    const newLeft = Math.max(
-      0,
-      Math.min(window.innerWidth - timeBox.offsetWidth, e.clientX - offsetX),
-    );
-    const newTop = Math.max(
-      0,
-      Math.min(window.innerHeight - timeBox.offsetHeight, e.clientY - offsetY),
-    );
+    const newLeft = Math.max(0, Math.min(window.innerWidth - timeBox.offsetWidth, e.clientX - offsetX));
+    const newTop = Math.max(0, Math.min(window.innerHeight - timeBox.offsetHeight, e.clientY - offsetY));
 
     timeBox.style.left = `${newLeft}px`;
     timeBox.style.top = `${newTop}px`;
@@ -936,13 +877,11 @@
     }
   });
 
-  // Prevent overlay collision on preference panel interactives
   settingsPanel.addEventListener("mousedown", (e) => e.stopPropagation());
   settingsPanel.addEventListener("mouseup", (e) => e.stopPropagation());
   settingsPanel.addEventListener("click", (e) => e.stopPropagation());
   settingsPanel.addEventListener("dblclick", (e) => e.stopPropagation());
   settingsPanel.addEventListener("keydown", (e) => e.stopPropagation());
-
   timeBox.addEventListener("click", (e) => e.stopPropagation());
   timeBox.addEventListener("dblclick", (e) => e.stopPropagation());
 
@@ -953,25 +892,21 @@
     const isOpen = settingsPanel.classList.toggle("show");
     if (isOpen) {
       timeBox.classList.add("settings-active");
-      // Smart-position: anchor panel below or above the bar based on available space
       const barRect = timeBox.getBoundingClientRect();
-      const panelHeight = 380;
+      const panelHeight = 330;
       const spaceBelow = window.innerHeight - barRect.bottom;
       const spaceAbove = barRect.top;
       if (spaceBelow >= panelHeight || spaceBelow >= spaceAbove) {
-        // Open downward
-        settingsPanel.style.top = `${barRect.bottom + 8}px`;
+        settingsPanel.style.top = `${barRect.bottom + 5}px`;
       } else {
-        // Open upward
-        settingsPanel.style.top = `${barRect.top - panelHeight - 8}px`;
+        settingsPanel.style.top = `${barRect.top - panelHeight - 5}px`;
       }
-      settingsPanel.style.left = `${Math.min(barRect.left, window.innerWidth - 298)}px`;
+      settingsPanel.style.left = `${Math.min(barRect.left, window.innerWidth - 248)}px`;
     } else {
       timeBox.classList.remove("settings-active");
     }
   });
 
-  // Helper setting up segment button click listeners
   function setupSegmentListener(containerId, settingsKey, onChangeCallback) {
     const container = document.getElementById(containerId);
     if (!container) return;
@@ -986,7 +921,6 @@
     });
   }
 
-  // Bind segment modules
   setupSegmentListener("uvc-seg-speed", "lockedSpeed", (val) => {
     speedBtn.innerText = `${val}x`;
     const vid = getActiveVideo();
@@ -1011,59 +945,43 @@
     if (vid) applyVideoFilters(vid);
   });
 
-  document
-    .getElementById("uvc-toggle-speedlock")
-    .addEventListener("change", (e) => {
-      uvcSettings.speedLock = e.target.checked;
-      saveSettings();
-    });
+  document.getElementById("uvc-toggle-speedlock").addEventListener("change", (e) => {
+    uvcSettings.speedLock = e.target.checked;
+    saveSettings();
+  });
 
-  document
-    .getElementById("uvc-btn-pip-trigger")
-    .addEventListener("click", () => {
-      togglePiP();
-    });
+  document.getElementById("uvc-btn-pip-trigger").addEventListener("click", () => {
+    togglePiP();
+  });
 
-  document
-    .getElementById("uvc-toggle-adskip")
-    .addEventListener("change", (e) => {
-      uvcSettings.adSkipperEnabled = e.target.checked;
-      saveSettings();
-    });
+  document.getElementById("uvc-toggle-adskip").addEventListener("change", (e) => {
+    uvcSettings.adSkipperEnabled = e.target.checked;
+    saveSettings();
+  });
 
-  document
-    .getElementById("uvc-toggle-autoscroll")
-    .addEventListener("change", (e) => {
-      uvcSettings.autoScrollEnabled = e.target.checked;
-      saveSettings();
-    });
+  document.getElementById("uvc-toggle-autoscroll").addEventListener("change", (e) => {
+    uvcSettings.autoScrollEnabled = e.target.checked;
+    saveSettings();
+  });
 
-  document
-    .getElementById("uvc-toggle-invert")
-    .addEventListener("change", (e) => {
-      uvcSettings.videoInvert = e.target.checked;
-      saveSettings();
-    });
+  document.getElementById("uvc-toggle-invert").addEventListener("change", (e) => {
+    uvcSettings.videoInvert = e.target.checked;
+    saveSettings();
+  });
 
-  document
-    .getElementById("uvc-toggle-visible")
-    .addEventListener("change", (e) => {
-      uvcSettings.stayVisible = e.target.checked;
-      saveSettings();
-    });
+  document.getElementById("uvc-toggle-visible").addEventListener("change", (e) => {
+    uvcSettings.stayVisible = e.target.checked;
+    saveSettings();
+  });
 
-  // RESTORE DEFAULT PREFERENCES OPERATION
   document.getElementById("uvc-btn-reset").addEventListener("click", () => {
     uvcSettings = { ...defaultSettings };
-
-    // Revert active video alterations back to neutral limits
     const activeVideo = getActiveVideo();
     if (activeVideo) {
       applyVideoFilters(activeVideo);
       applyAudioBoost(activeVideo, 1.0);
       activeVideo.playbackRate = 1.0;
     }
-
     saveSettings();
     loadSettings();
   });
@@ -1089,7 +1007,6 @@
         const total = formatTime(activeVideo.duration);
         timeText.innerText = `${current} / ${total}`;
 
-        // Loop-aware ended detection (Tracks playhead status)
         if (uvcSettings.autoScrollEnabled) {
           if (lastVideo !== activeVideo) {
             lastVideo = activeVideo;
@@ -1113,26 +1030,17 @@
           lastVideo = null;
         }
 
-        // Update UI speed indicators if altered natively by hosts (without locking)
-        if (
-          !uvcSettings.speedLock &&
-          activeVideo.playbackRate !== speeds[speedIndex]
-        ) {
+        if (!uvcSettings.speedLock && activeVideo.playbackRate !== speeds[speedIndex]) {
           const actualIndex = speeds.indexOf(activeVideo.playbackRate);
           speedIndex = actualIndex >= 0 ? actualIndex : 0;
           speedBtn.innerText = `${activeVideo.playbackRate}x`;
           selectSegmentActive("uvc-seg-speed", activeVideo.playbackRate);
         }
 
-        // Enforce lock speed bounds
-        if (
-          uvcSettings.speedLock &&
-          activeVideo.playbackRate !== uvcSettings.lockedSpeed
-        ) {
+        if (uvcSettings.speedLock && activeVideo.playbackRate !== uvcSettings.lockedSpeed) {
           activeVideo.playbackRate = uvcSettings.lockedSpeed;
         }
 
-        // Apply configured effects
         applyVideoFilters(activeVideo);
         applyAudioBoost(activeVideo, uvcSettings.audioBoost);
       } else {
@@ -1173,44 +1081,45 @@
       vid.currentTime = Math.max(0, vid.currentTime - uvcSettings.skipInterval);
     }
     if (event.key === "ArrowRight") {
-      vid.currentTime = Math.min(
-        vid.duration,
-        vid.currentTime + uvcSettings.skipInterval,
-      );
+      vid.currentTime = Math.min(vid.duration, vid.currentTime + uvcSettings.skipInterval);
     }
   });
 
   // ==========================================
-  // 11. FEED AD DETECTION LOGIC
+  // 11. FEED AD DETECTION LOGIC (FIXED)
   // ==========================================
   setInterval(() => {
     if (!uvcSettings.adSkipperEnabled) return;
 
-    // NOTE: activeVideo is now OPTIONAL. Previously this whole block returned
-    // early when no <video> was playing, which meant non-video ads (image
-    // posts, carousels, etc. — common on Instagram) were never even checked,
-    // let alone skipped. Detection now runs regardless of video presence.
     const activeVideo = getActiveVideo();
+    // FIX: Completely ignore ad-skipping logic if no video is actively playing.
+    // This stops it from automatically scrolling past Facebook text/image posts.
+    if (!activeVideo) return;
 
     let isAdVisible = false;
+    const vidRect = activeVideo.getBoundingClientRect();
 
-    // 1. CHECK ACCESSIBILITY TAGS
+    // Helper: Prevent skipping a genuine video just because a sidebar/footer ad exists.
+    // Checks if the "Sponsored" label is spatially near the video player.
+    const isAdRelatedToVideo = (adRect) => {
+      const verticallyClose = Math.abs(adRect.top - vidRect.top) < (vidRect.height + 400);
+      const horizontallyClose = Math.abs(adRect.left - vidRect.left) < (vidRect.width + 400);
+      return verticallyClose && horizontallyClose;
+    };
+
     const ariaElements = document.querySelectorAll(
       '[aria-label="Sponsored"], [aria-label="Ad"], [aria-label="Promoted"]',
     );
     for (let el of ariaElements) {
       const rect = el.getBoundingClientRect();
-      if (
-        rect.top >= 0 &&
-        rect.bottom <= window.innerHeight &&
-        rect.height > 0
-      ) {
-        isAdVisible = true;
-        break;
+      if (rect.top >= 0 && rect.bottom <= window.innerHeight && rect.height > 0) {
+        if (isAdRelatedToVideo(rect)) {
+          isAdVisible = true;
+          break;
+        }
       }
     }
 
-    // 2. CHECK OBFUSCATED TEXT
     if (!isAdVisible) {
       const textElements = document.querySelectorAll("span, div, a");
       for (let el of textElements) {
@@ -1218,30 +1127,22 @@
           const cleanText = el.innerText
             .replace(/[\u200B-\u200D\uFEFF\s\n]/g, "")
             .toLowerCase();
-          if (
-            cleanText === "sponsored" ||
-            cleanText === "ad" ||
-            cleanText === "promoted"
-          ) {
+          if (cleanText === "sponsored" || cleanText === "ad" || cleanText === "promoted") {
             const rect = el.getBoundingClientRect();
-            if (
-              rect.top >= 0 &&
-              rect.bottom <= window.innerHeight &&
-              rect.height > 0
-            ) {
-              isAdVisible = true;
-              break;
+            if (rect.top >= 0 && rect.bottom <= window.innerHeight && rect.height > 0) {
+              if (isAdRelatedToVideo(rect)) {
+                isAdVisible = true;
+                break;
+              }
             }
           }
         }
       }
     }
 
-    // 3. THE SKIP ACTION
     if (isAdVisible) {
       console.log("Universal Video Controller: Ad detected! Skipping...");
 
-      // METHOD A: TikTok / YT Shorts Next buttons
       const nextButtons = [
         document.querySelector('[aria-label="Next video"]'),
         document.querySelector('[data-e2e="arrow-right"]'),
@@ -1253,8 +1154,6 @@
         }
       }
 
-      // METHOD B: Simulate pressing the "Arrow Down" key (Perfect for IG Reels
-      // AND non-video feed items, since it just advances the feed cursor)
       const arrowEvent = new KeyboardEvent("keydown", {
         key: "ArrowDown",
         code: "ArrowDown",
@@ -1265,14 +1164,10 @@
       });
 
       document.dispatchEvent(arrowEvent);
-      // Only dispatch to the video if one actually exists — this used to
-      // throw/skip silently on image-only ads since activeVideo was undefined.
       if (activeVideo) {
         activeVideo.dispatchEvent(arrowEvent);
       }
 
-      // METHOD C: Fallback smooth scroll (for standard scrolling feeds,
-      // including image/carousel posts with no video element at all)
       window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
 
       const scrollContainers = document.querySelectorAll(
