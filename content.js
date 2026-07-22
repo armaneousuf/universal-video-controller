@@ -29,7 +29,7 @@
     -webkit-backdrop-filter: blur(14px);
     color: #ffffff;
     padding: 2px 4px;
-    border-radius: 12px;
+    border-radius: 0 10px 10px 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     font-size: 11px;
     font-weight: 600;
