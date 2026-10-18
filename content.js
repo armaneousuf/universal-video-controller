@@ -166,7 +166,7 @@
     padding: 10px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
     z-index: 2147483647;
-    max-height: 360px;
+    max-height: 400px;
     overflow-y: auto;
     gap: 7px;
     font-weight: normal;
@@ -376,6 +376,7 @@
     autoScrollEnabled: false,
     stayVisible: false,
     isCollapsed: false,
+    timeFormat: "auto",
   };
 
   let uvcSettings = { ...defaultSettings };
@@ -470,6 +471,15 @@
  <button class="uvc-segment-btn" data-val="10">10s</button>
  <button class="uvc-segment-btn" data-val="30">30s</button>
  <button class="uvc-segment-btn" data-val="60">60s</button>
+ </div>
+ </div>
+
+ <div class="uvc-control-group">
+ <div class="uvc-control-label">Time Display</div>
+ <div class="uvc-segment-container" id="uvc-seg-timeformat">
+ <button class="uvc-segment-btn" data-val="auto">Auto</button>
+ <button class="uvc-segment-btn" data-val="hms">H:M:S</button>
+ <button class="uvc-segment-btn" data-val="minutes">Minutes</button>
  </div>
  </div>
 
@@ -583,8 +593,15 @@
     const container = document.getElementById(containerId);
     if (!container) return;
     const buttons = container.querySelectorAll(".uvc-segment-btn");
+    // Numeric settings (speed, volume, ...) compare as numbers; string
+    // settings (like the time format) compare by exact text.
+    const numeric = value !== "" && value !== null && !isNaN(value);
     buttons.forEach((btn) => {
-      if (parseFloat(btn.getAttribute("data-val")) === parseFloat(value)) {
+      const attr = btn.getAttribute("data-val");
+      const match = numeric
+        ? parseFloat(attr) === parseFloat(value)
+        : attr === String(value);
+      if (match) {
         btn.classList.add("active");
       } else {
         btn.classList.remove("active");
@@ -618,6 +635,7 @@
       speedBtn.innerText = `${uvcSettings.lockedSpeed}x`;
 
       selectSegmentActive("uvc-seg-skip", uvcSettings.skipInterval);
+      selectSegmentActive("uvc-seg-timeformat", uvcSettings.timeFormat);
       selectSegmentActive("uvc-seg-boost", uvcSettings.audioBoost);
       selectSegmentActive("uvc-seg-bright", uvcSettings.videoBrightness);
       selectSegmentActive("uvc-seg-contrast", uvcSettings.videoContrast);
@@ -790,10 +808,27 @@
   }
 
   function formatTime(seconds) {
-    if (isNaN(seconds) || seconds === Infinity) return "0:00";
-    const min = Math.floor(seconds / 60);
-    const sec = Math.floor(seconds % 60);
-    return `${min}:${sec < 10 ? "0" : ""}${sec}`;
+    const mode = uvcSettings.timeFormat || "auto";
+
+    if (isNaN(seconds) || seconds === Infinity || seconds < 0) {
+      return mode === "hms" ? "0:00:00" : "0:00";
+    }
+
+    const total = Math.floor(seconds);
+    const hours = Math.floor(total / 3600);
+    const minutes = Math.floor((total % 3600) / 60);
+    const secs = total % 60;
+    const ss = secs < 10 ? `0${secs}` : `${secs}`;
+
+    // "hms" always shows hours; "auto" only adds them once the video
+    // passes the one-hour mark. Everything else counts in minutes.
+    if (mode === "hms" || (mode === "auto" && hours > 0)) {
+      const mm = minutes < 10 ? `0${minutes}` : `${minutes}`;
+      return `${hours}:${mm}:${ss}`;
+    }
+
+    const totalMinutes = Math.floor(total / 60);
+    return `${totalMinutes}:${ss}`;
   }
 
   // ==========================================
@@ -893,7 +928,7 @@
     if (isOpen) {
       timeBox.classList.add("settings-active");
       const barRect = timeBox.getBoundingClientRect();
-      const panelHeight = 330;
+      const panelHeight = 365;
       const spaceBelow = window.innerHeight - barRect.bottom;
       const spaceAbove = barRect.top;
       if (spaceBelow >= panelHeight || spaceBelow >= spaceAbove) {
@@ -913,7 +948,8 @@
     container.addEventListener("click", (e) => {
       const btn = e.target.closest(".uvc-segment-btn");
       if (!btn) return;
-      const val = parseFloat(btn.getAttribute("data-val"));
+      const raw = btn.getAttribute("data-val");
+      const val = raw !== "" && !isNaN(raw) ? parseFloat(raw) : raw;
       uvcSettings[settingsKey] = val;
       selectSegmentActive(containerId, val);
       if (onChangeCallback) onChangeCallback(val);
@@ -928,6 +964,7 @@
   });
 
   setupSegmentListener("uvc-seg-skip", "skipInterval");
+  setupSegmentListener("uvc-seg-timeformat", "timeFormat");
   setupSegmentListener("uvc-seg-boost", "audioBoost");
 
   setupSegmentListener("uvc-seg-bright", "videoBrightness", () => {
