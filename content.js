@@ -146,8 +146,14 @@
     font-variant-numeric: tabular-nums;
     letter-spacing: -0.1px;
     color: rgba(255, 255, 255, 0.9);
+    
+    height: 20px;         
     line-height: 20px;
-    display: inline-block;
+    padding-top: 2px;     
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   /* ==========================================
@@ -641,11 +647,16 @@
       selectSegmentActive("uvc-seg-contrast", uvcSettings.videoContrast);
       selectSegmentActive("uvc-seg-grayscale", uvcSettings.videoGrayscale);
 
-      document.getElementById("uvc-toggle-speedlock").checked = uvcSettings.speedLock;
-      document.getElementById("uvc-toggle-adskip").checked = uvcSettings.adSkipperEnabled;
-      document.getElementById("uvc-toggle-autoscroll").checked = uvcSettings.autoScrollEnabled;
-      document.getElementById("uvc-toggle-invert").checked = uvcSettings.videoInvert;
-      document.getElementById("uvc-toggle-visible").checked = uvcSettings.stayVisible;
+      document.getElementById("uvc-toggle-speedlock").checked =
+        uvcSettings.speedLock;
+      document.getElementById("uvc-toggle-adskip").checked =
+        uvcSettings.adSkipperEnabled;
+      document.getElementById("uvc-toggle-autoscroll").checked =
+        uvcSettings.autoScrollEnabled;
+      document.getElementById("uvc-toggle-invert").checked =
+        uvcSettings.videoInvert;
+      document.getElementById("uvc-toggle-visible").checked =
+        uvcSettings.stayVisible;
 
       applyCollapseState();
     });
@@ -740,7 +751,9 @@
       scrollCooldown = false;
     }, 3000);
 
-    console.log("Universal Video Controller: Video ended or looped, auto-advancing...");
+    console.log(
+      "Universal Video Controller: Video ended or looped, auto-advancing...",
+    );
 
     const nextButtons = [
       document.querySelector('[aria-label="Next video"]'),
@@ -777,10 +790,28 @@
           bubbles: true,
           cancelable: true,
           touches: [
-            new Touch({ identifier: Date.now(), target: vid, clientX: touchX, clientY: y, radiusX: 2, radiusY: 2, rotationAngle: 0, force: 1 }),
+            new Touch({
+              identifier: Date.now(),
+              target: vid,
+              clientX: touchX,
+              clientY: y,
+              radiusX: 2,
+              radiusY: 2,
+              rotationAngle: 0,
+              force: 1,
+            }),
           ],
           changedTouches: [
-            new Touch({ identifier: Date.now(), target: vid, clientX: touchX, clientY: y, radiusX: 2, radiusY: 2, rotationAngle: 0, force: 1 }),
+            new Touch({
+              identifier: Date.now(),
+              target: vid,
+              clientX: touchX,
+              clientY: y,
+              radiusX: 2,
+              radiusY: 2,
+              rotationAngle: 0,
+              force: 1,
+            }),
           ],
         });
 
@@ -836,12 +867,17 @@
   // ==========================================
   backBtn.addEventListener("click", () => {
     const vid = getActiveVideo();
-    if (vid) vid.currentTime = Math.max(0, vid.currentTime - uvcSettings.skipInterval);
+    if (vid)
+      vid.currentTime = Math.max(0, vid.currentTime - uvcSettings.skipInterval);
   });
 
   forwardBtn.addEventListener("click", () => {
     const vid = getActiveVideo();
-    if (vid) vid.currentTime = Math.min(vid.duration, vid.currentTime + uvcSettings.skipInterval);
+    if (vid)
+      vid.currentTime = Math.min(
+        vid.duration,
+        vid.currentTime + uvcSettings.skipInterval,
+      );
   });
 
   const speeds = [1, 1.25, 1.5, 2, 0.5];
@@ -896,8 +932,14 @@
   document.addEventListener("mousemove", (e) => {
     if (!isDragging) return;
 
-    const newLeft = Math.max(0, Math.min(window.innerWidth - timeBox.offsetWidth, e.clientX - offsetX));
-    const newTop = Math.max(0, Math.min(window.innerHeight - timeBox.offsetHeight, e.clientY - offsetY));
+    const newLeft = Math.max(
+      0,
+      Math.min(window.innerWidth - timeBox.offsetWidth, e.clientX - offsetX),
+    );
+    const newTop = Math.max(
+      0,
+      Math.min(window.innerHeight - timeBox.offsetHeight, e.clientY - offsetY),
+    );
 
     timeBox.style.left = `${newLeft}px`;
     timeBox.style.top = `${newTop}px`;
@@ -982,34 +1024,46 @@
     if (vid) applyVideoFilters(vid);
   });
 
-  document.getElementById("uvc-toggle-speedlock").addEventListener("change", (e) => {
-    uvcSettings.speedLock = e.target.checked;
-    saveSettings();
-  });
+  document
+    .getElementById("uvc-toggle-speedlock")
+    .addEventListener("change", (e) => {
+      uvcSettings.speedLock = e.target.checked;
+      saveSettings();
+    });
 
-  document.getElementById("uvc-btn-pip-trigger").addEventListener("click", () => {
-    togglePiP();
-  });
+  document
+    .getElementById("uvc-btn-pip-trigger")
+    .addEventListener("click", () => {
+      togglePiP();
+    });
 
-  document.getElementById("uvc-toggle-adskip").addEventListener("change", (e) => {
-    uvcSettings.adSkipperEnabled = e.target.checked;
-    saveSettings();
-  });
+  document
+    .getElementById("uvc-toggle-adskip")
+    .addEventListener("change", (e) => {
+      uvcSettings.adSkipperEnabled = e.target.checked;
+      saveSettings();
+    });
 
-  document.getElementById("uvc-toggle-autoscroll").addEventListener("change", (e) => {
-    uvcSettings.autoScrollEnabled = e.target.checked;
-    saveSettings();
-  });
+  document
+    .getElementById("uvc-toggle-autoscroll")
+    .addEventListener("change", (e) => {
+      uvcSettings.autoScrollEnabled = e.target.checked;
+      saveSettings();
+    });
 
-  document.getElementById("uvc-toggle-invert").addEventListener("change", (e) => {
-    uvcSettings.videoInvert = e.target.checked;
-    saveSettings();
-  });
+  document
+    .getElementById("uvc-toggle-invert")
+    .addEventListener("change", (e) => {
+      uvcSettings.videoInvert = e.target.checked;
+      saveSettings();
+    });
 
-  document.getElementById("uvc-toggle-visible").addEventListener("change", (e) => {
-    uvcSettings.stayVisible = e.target.checked;
-    saveSettings();
-  });
+  document
+    .getElementById("uvc-toggle-visible")
+    .addEventListener("change", (e) => {
+      uvcSettings.stayVisible = e.target.checked;
+      saveSettings();
+    });
 
   document.getElementById("uvc-btn-reset").addEventListener("click", () => {
     uvcSettings = { ...defaultSettings };
@@ -1067,14 +1121,20 @@
           lastVideo = null;
         }
 
-        if (!uvcSettings.speedLock && activeVideo.playbackRate !== speeds[speedIndex]) {
+        if (
+          !uvcSettings.speedLock &&
+          activeVideo.playbackRate !== speeds[speedIndex]
+        ) {
           const actualIndex = speeds.indexOf(activeVideo.playbackRate);
           speedIndex = actualIndex >= 0 ? actualIndex : 0;
           speedBtn.innerText = `${activeVideo.playbackRate}x`;
           selectSegmentActive("uvc-seg-speed", activeVideo.playbackRate);
         }
 
-        if (uvcSettings.speedLock && activeVideo.playbackRate !== uvcSettings.lockedSpeed) {
+        if (
+          uvcSettings.speedLock &&
+          activeVideo.playbackRate !== uvcSettings.lockedSpeed
+        ) {
           activeVideo.playbackRate = uvcSettings.lockedSpeed;
         }
 
@@ -1118,7 +1178,10 @@
       vid.currentTime = Math.max(0, vid.currentTime - uvcSettings.skipInterval);
     }
     if (event.key === "ArrowRight") {
-      vid.currentTime = Math.min(vid.duration, vid.currentTime + uvcSettings.skipInterval);
+      vid.currentTime = Math.min(
+        vid.duration,
+        vid.currentTime + uvcSettings.skipInterval,
+      );
     }
   });
 
@@ -1139,8 +1202,10 @@
     // Helper: Prevent skipping a genuine video just because a sidebar/footer ad exists.
     // Checks if the "Sponsored" label is spatially near the video player.
     const isAdRelatedToVideo = (adRect) => {
-      const verticallyClose = Math.abs(adRect.top - vidRect.top) < (vidRect.height + 400);
-      const horizontallyClose = Math.abs(adRect.left - vidRect.left) < (vidRect.width + 400);
+      const verticallyClose =
+        Math.abs(adRect.top - vidRect.top) < vidRect.height + 400;
+      const horizontallyClose =
+        Math.abs(adRect.left - vidRect.left) < vidRect.width + 400;
       return verticallyClose && horizontallyClose;
     };
 
@@ -1149,7 +1214,11 @@
     );
     for (let el of ariaElements) {
       const rect = el.getBoundingClientRect();
-      if (rect.top >= 0 && rect.bottom <= window.innerHeight && rect.height > 0) {
+      if (
+        rect.top >= 0 &&
+        rect.bottom <= window.innerHeight &&
+        rect.height > 0
+      ) {
         if (isAdRelatedToVideo(rect)) {
           isAdVisible = true;
           break;
@@ -1164,9 +1233,17 @@
           const cleanText = el.innerText
             .replace(/[\u200B-\u200D\uFEFF\s\n]/g, "")
             .toLowerCase();
-          if (cleanText === "sponsored" || cleanText === "ad" || cleanText === "promoted") {
+          if (
+            cleanText === "sponsored" ||
+            cleanText === "ad" ||
+            cleanText === "promoted"
+          ) {
             const rect = el.getBoundingClientRect();
-            if (rect.top >= 0 && rect.bottom <= window.innerHeight && rect.height > 0) {
+            if (
+              rect.top >= 0 &&
+              rect.bottom <= window.innerHeight &&
+              rect.height > 0
+            ) {
               if (isAdRelatedToVideo(rect)) {
                 isAdVisible = true;
                 break;
