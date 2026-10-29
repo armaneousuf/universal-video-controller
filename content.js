@@ -147,7 +147,7 @@
     letter-spacing: -0.1px;
     color: rgba(255, 255, 255, 0.9);
     
-    height: 20px;         
+    height: 20px;           
     line-height: 20px;
     padding-top: 2px;     
     box-sizing: border-box;
