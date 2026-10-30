@@ -26,7 +26,7 @@ when you want it out of the way.
 - **Live time readout** — `current / total`, in the format you choose.
 - **Scrub interval** — the jump-back / jump-forward buttons and the arrow keys move by
   2s, 5s, 10s, 30s or 60s.
-- **Speed cycling** — click the speed pill to cycle `1x → 1.25x → 1.5x → 2x → 0.5x`, or
+- **Speed cycling** — click the speed pill to cycle `1x → 1.25x → 1.5x → 2x → 3x → 4x → 0.5x`, or
   pick an exact speed in the settings panel.
 - **Keep speed across videos** — pin a playback rate and every new video inherits it
   (useful for lecture sites that reset speed on every reload).
@@ -89,7 +89,7 @@ All filters are non-destructive CSS on the video element and reset instantly.
 
 | Section                | Setting                  | Options                    |
 | ---------------------- | ------------------------ | -------------------------- |
-| Playback & Controls    | Playback Speed           | 0.5x, 1x, 1.5x, 2x, 3x, 4x |
+| Playback & Controls    | Playback Speed           | 0.5x, 1x, 1.25x, 1.5x, 2x, 3x, 4x |
 |                        | Keep Speed Across Videos | on / off                   |
 |                        | Scrub Interval           | 2s, 5s, 10s, 30s, 60s      |
 |                        | Time Display             | Auto, H:M:S, Minutes       |
@@ -103,6 +103,9 @@ All filters are non-destructive CSS on the video element and reset instantly.
 |                        | Invert Image Colors      | on / off                   |
 |                        | Always Show Controller   | on / off                   |
 | Bottom                 | Reset to Defaults        | restores everything        |
+
+The panel's scrollbar is hidden; a pulsing chevron along the bottom edge indicates
+that more settings are available below.
 
 **Time display modes**
 

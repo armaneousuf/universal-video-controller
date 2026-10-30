@@ -178,19 +178,65 @@
     font-weight: normal;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     box-sizing: border-box;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 
   .uvc-settings-panel.show {
     display: flex;
   }
 
-  /* Custom Panel Scrollbar */
+  /* Hide the scrollbar while keeping the panel scrollable */
   .uvc-settings-panel::-webkit-scrollbar {
-    width: 3px;
+    display: none;
   }
-  .uvc-settings-panel::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.12);
-    border-radius: 3px;
+
+  /* Bottom fade + chevron shown while more settings are below */
+  .uvc-scroll-hint {
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+    display: none;
+    flex-shrink: 0;
+    align-items: flex-end;
+    justify-content: center;
+    height: 28px;
+    margin: 0 -10px -10px;
+    padding-bottom: 2px;
+    background: linear-gradient(
+      to bottom,
+      rgba(18, 18, 18, 0) 0%,
+      rgba(18, 18, 18, 0.85) 55%,
+      rgba(18, 18, 18, 0.96) 100%
+    );
+    color: rgba(255, 255, 255, 0.55);
+    pointer-events: none;
+  }
+
+  .uvc-settings-panel.has-more .uvc-scroll-hint {
+    display: flex;
+  }
+
+  .uvc-scroll-hint svg {
+    animation: uvc-scroll-hint 1.5s ease-in-out infinite;
+  }
+
+  @keyframes uvc-scroll-hint {
+    0%,
+    100% {
+      transform: translateY(0);
+      opacity: 0.55;
+    }
+    50% {
+      transform: translateY(3px);
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .uvc-scroll-hint svg {
+      animation: none;
+    }
   }
 
   .uvc-section-title {
@@ -454,6 +500,7 @@
  <div class="uvc-segment-container" id="uvc-seg-speed">
  <button class="uvc-segment-btn" data-val="0.5">0.5x</button>
  <button class="uvc-segment-btn" data-val="1">1x</button>
+ <button class="uvc-segment-btn" data-val="1.25">1.25x</button>
  <button class="uvc-segment-btn" data-val="1.5">1.5x</button>
  <button class="uvc-segment-btn" data-val="2">2x</button>
  <button class="uvc-segment-btn" data-val="3">3x</button>
@@ -576,6 +623,10 @@
  </div>
 
  <button class="uvc-btn-reset" id="uvc-btn-reset">Reset to Defaults</button>
+
+ <div class="uvc-scroll-hint" aria-hidden="true">
+ <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+ </div>
  `;
 
   // Assemble floating elements
@@ -587,6 +638,17 @@
   timeBox.appendChild(collapseBtn);
   document.body.appendChild(timeBox);
   document.body.appendChild(settingsPanel);
+
+  function updateScrollHint() {
+    const remaining =
+      settingsPanel.scrollHeight -
+      settingsPanel.scrollTop -
+      settingsPanel.clientHeight;
+    settingsPanel.classList.toggle("has-more", remaining > 4);
+  }
+
+  settingsPanel.addEventListener("scroll", updateScrollHint, { passive: true });
+  window.addEventListener("resize", updateScrollHint);
 
   // ==========================================
   // 4. PRESERVATION LOGIC (CHROME STORAGE)
@@ -880,7 +942,7 @@
       );
   });
 
-  const speeds = [1, 1.25, 1.5, 2, 0.5];
+  const speeds = [1, 1.25, 1.5, 2, 3, 4, 0.5];
   let speedIndex = 0;
   speedBtn.addEventListener("click", () => {
     const vid = getActiveVideo();
@@ -979,6 +1041,7 @@
         settingsPanel.style.top = `${barRect.top - panelHeight - 5}px`;
       }
       settingsPanel.style.left = `${Math.min(barRect.left, window.innerWidth - 248)}px`;
+      requestAnimationFrame(updateScrollHint);
     } else {
       timeBox.classList.remove("settings-active");
     }

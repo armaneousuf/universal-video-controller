@@ -162,7 +162,7 @@ forwardBtn.addEventListener("click", () => {
 });
 
 // Playback Speed logic
-const speeds = [1, 1.25, 1.5, 2, 0.5];
+const speeds = [1, 1.25, 1.5, 2, 3, 4, 0.5];
 let speedIndex = 0;
 speedBtn.addEventListener("click", () => {
   const vid = getActiveVideo();
