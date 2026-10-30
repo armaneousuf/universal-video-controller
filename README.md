@@ -30,6 +30,8 @@ when you want it out of the way.
   pick an exact speed in the settings panel.
 - **Keep speed across videos** — pin a playback rate and every new video inherits it
   (useful for lecture sites that reset speed on every reload).
+- **Repeat video (loop)** — loop the current video endlessly from the settings panel.
+  Turning it off restores the player's own loop state.
 
 ### Audio and video effects
 
@@ -46,7 +48,7 @@ All filters are non-destructive CSS on the video element and reset instantly.
   playing video in short-form feeds and advances past them.
 - **Auto-scroll feeds** — when a video ends or loops, moves to the next one. Handles
   platform arrow buttons, scrollable containers, Instagram touch swipes, and a plain
-  ArrowDown fallback.
+  ArrowDown fallback. Paused automatically while **Repeat Video** is on.
 
 ### Quality of life
 
@@ -91,6 +93,7 @@ All filters are non-destructive CSS on the video element and reset instantly.
 | ---------------------- | ------------------------ | -------------------------- |
 | Playback & Controls    | Playback Speed           | 0.5x, 1x, 1.25x, 1.5x, 2x, 3x, 4x |
 |                        | Keep Speed Across Videos | on / off                   |
+|                        | Repeat Video (Loop)      | on / off                   |
 |                        | Scrub Interval           | 2s, 5s, 10s, 30s, 60s      |
 |                        | Time Display             | Auto, H:M:S, Minutes       |
 |                        | Screencast Window        | toggle picture-in-picture  |
@@ -145,9 +148,9 @@ original with scrubbing, speed, a timer and dragging. It is **not** referenced b
 | 2   | Default settings      | Every persisted preference and its default                                              |
 | 3   | DOM construction      | Builds the bar and panel with inline SVG icons                                          |
 | 4   | Persistence           | `chrome.storage.local` reads and writes                                                 |
-| 5   | Engines               | Active-video detection, CSS filters, Web Audio boost, PiP, feed scroll, time formatting |
+| 5   | Engines               | Active-video detection, CSS filters, Web Audio boost, PiP, feed scroll, repeat/loop, time formatting |
 | 6–8 | Event wiring          | Buttons, speed cycling, dragging, every settings control                                |
-| 9   | Polling loop (300 ms) | Timer updates, filters, audio boost, speed lock, auto-scroll trigger, auto-hide         |
+| 9   | Polling loop (300 ms) | Timer updates, filters, audio boost, speed lock, repeat/loop, auto-scroll, auto-hide      |
 | 10  | Keyboard              | `←` / `→` scrubbing                                                                     |
 | 11  | Ad detection (500 ms) | Finds "Sponsored" markers near the playing video and advances                           |
 

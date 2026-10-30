@@ -424,6 +424,7 @@
     videoContrast: 100,
     videoGrayscale: 0,
     videoInvert: false,
+    repeatVideo: false,
     adSkipperEnabled: true,
     autoScrollEnabled: false,
     stayVisible: false,
@@ -512,6 +513,14 @@
  <label for="uvc-toggle-speedlock">Keep Speed Across Videos</label>
  <label class="uvc-switch">
  <input type="checkbox" id="uvc-toggle-speedlock">
+ <span class="uvc-slider-switch"></span>
+ </label>
+ </div>
+
+ <div class="uvc-control-row">
+ <label for="uvc-toggle-repeat">Repeat Video (Loop)</label>
+ <label class="uvc-switch">
+ <input type="checkbox" id="uvc-toggle-repeat">
  <span class="uvc-slider-switch"></span>
  </label>
  </div>
@@ -720,6 +729,7 @@
       document.getElementById("uvc-toggle-visible").checked =
         uvcSettings.stayVisible;
 
+      updateRepeatUI();
       applyCollapseState();
     });
   }
@@ -760,6 +770,21 @@
    invert(${uvcSettings.videoInvert ? 1 : 0})
    grayscale(${uvcSettings.videoGrayscale}%)
    `;
+  }
+
+  // Remember each video's own loop state so disabling Repeat restores it
+  // instead of forcing looping off on players that loop by themselves.
+  const repeatOriginals = new WeakMap();
+
+  function applyRepeat(vid) {
+    if (!vid) return;
+    if (!repeatOriginals.has(vid)) {
+      repeatOriginals.set(vid, vid.loop);
+    }
+    const desired = uvcSettings.repeatVideo || repeatOriginals.get(vid);
+    if (vid.loop !== desired) {
+      vid.loop = desired;
+    }
   }
 
   function applyAudioBoost(vid, multiplier) {
@@ -965,6 +990,19 @@
     saveSettings();
   });
 
+  function updateRepeatUI() {
+    const toggle = document.getElementById("uvc-toggle-repeat");
+    if (toggle) toggle.checked = !!uvcSettings.repeatVideo;
+  }
+
+  function setRepeat(enabled) {
+    uvcSettings.repeatVideo = enabled;
+    updateRepeatUI();
+    // Apply immediately, even if the video is paused right now.
+    applyRepeat(getActiveVideo() || document.querySelector("video"));
+    saveSettings();
+  }
+
   // ==========================================
   // 7. DRAG, DROP, AND LOCK ACTION TRIGGERS
   // ==========================================
@@ -1032,7 +1070,7 @@
     if (isOpen) {
       timeBox.classList.add("settings-active");
       const barRect = timeBox.getBoundingClientRect();
-      const panelHeight = 365;
+      const panelHeight = 400;
       const spaceBelow = window.innerHeight - barRect.bottom;
       const spaceAbove = barRect.top;
       if (spaceBelow >= panelHeight || spaceBelow >= spaceAbove) {
@@ -1095,6 +1133,12 @@
     });
 
   document
+    .getElementById("uvc-toggle-repeat")
+    .addEventListener("change", (e) => {
+      setRepeat(e.target.checked);
+    });
+
+  document
     .getElementById("uvc-btn-pip-trigger")
     .addEventListener("click", () => {
       togglePiP();
@@ -1133,9 +1177,11 @@
     const activeVideo = getActiveVideo();
     if (activeVideo) {
       applyVideoFilters(activeVideo);
+      applyRepeat(activeVideo);
       applyAudioBoost(activeVideo, 1.0);
       activeVideo.playbackRate = 1.0;
     }
+    updateRepeatUI();
     saveSettings();
     loadSettings();
   });
@@ -1170,7 +1216,8 @@
           const currTime = activeVideo.currentTime;
           const duration = activeVideo.duration;
 
-          if (duration > 0) {
+          // While repeating, let the video loop instead of advancing the feed.
+          if (duration > 0 && !uvcSettings.repeatVideo) {
             const nearEnd = duration - currTime < 0.4;
             const justLooped = currTime < lastTime && duration - lastTime < 1.2;
 
@@ -1202,6 +1249,7 @@
         }
 
         applyVideoFilters(activeVideo);
+        applyRepeat(activeVideo);
         applyAudioBoost(activeVideo, uvcSettings.audioBoost);
       } else {
         timeText.innerText = "No active video";
